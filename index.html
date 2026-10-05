@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>Sush'Tes Potes </title>
+ <style>
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Fredoka:wght@500;600;700&display=swap');
+
+  :root{
+   --bg1:#2a1746;
+   --bg2:#4c2a70;
+   --cream:#fff8ef;
+   --pink:#ff8dc8;
+   --pink2:#ffd2e8;
+   --lav:#c8a7ff;
+   --blue:#8edcff;
+   --mint:#9ff3d7;
+   --yellow:#ffe887;
+   --ink:#573e70;
+   --card:rgba(255,255,255,.84);
+   --stroke:rgba(255,255,255,.6);
+   --shadow:0 18px 50px rgba(47,24,74,.22);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  body{
+   min-height:100vh;
+   padding:24px;
+   color:var(--ink);
+   font-family:"Baloo 2",system-ui,sans-serif;
+   background:
+    radial-gradient(circle at 10% 10%, rgba(255,141,200,.55), transparent 28%),
+    radial-gradient(circle at 90% 12%, rgba(142,220,255,.55), transparent 28%),
+    radial-gradient(circle at 20% 95%, rgba(159,243,215,.35), transparent 25%),
+    linear-gradient(180deg,var(--bg1),var(--bg2) 45%,#6c4b92 100%);
+   overflow-x:hidden;
+  }
+
+  body::before,
+  body::after{
+   content:"";
+   position:fixed;
+   inset:0;
+   pointer-events:none;
+   z-index:0;
+  }
+
+  body::before{
+   background-image:
+    radial-gradient(circle, rgba(255,255,255,.9) 0 2px, transparent 3px),
+    radial-gradient(circle, rgba(255,255,255,.7) 0 1.5px, transparent 2.5px);
+   background-size:80px 80px,110px 110px;
+   background-position:0 0,30px 20px;
+   opacity:.45;
+   animation:stars 18s linear infinite;
+  }
+
+  body::after{
+   background:
+    linear-gradient(115deg, transparent 0 47%, rgba(255,255,255,.06) 50%, transparent 53% 100%);
+   background-size:220px 220px;
+   animation:shine 16s linear infinite;
+  }
+
+  @keyframes stars{to{background-position:0 160px,30px 240px}}
+  @keyframes shine{to{background-position:440px 0}}
+
+  .wrapper{
+   position:relative;
+   z-index:1;
+   width:1500px;
+   max-width:100%;
+   margin:0 auto;
+   display:flex;
+   flex-direction:column;
+   gap:22px;
+  }
+
+  .hero{
+   position:relative;
+   overflow:hidden;
+   border-radius:30px;
+   padding:28px 30px;
+   background:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,.95), transparent 14%),
+    linear-gradient(135deg, rgba(255,216,236,.95), rgba(212,197,255,.95) 45%, rgba(169,234,255,.95));
+   border:2px solid rgba(255,255,255,.7);
+   box-shadow:var(--shadow), inset 0 0 30px rgba(255,255,255,.55);
+  }
+
+  .hero::after{
+   content:"☁️ ✦ 🦄   ☁️ 💫";
+   position:absolute;
+   right:20px;
+   bottom:2px;
+   font-size:38px;
+   opacity:.35;
+   transform:rotate(-5deg);
+   white-space:nowrap;
+  }
+
+  h1,h2,h3{
+   font-family:"Fredoka",sans-serif;
+   color:#694a83;
+   letter-spacing:.2px;
+  }
+
+  h1{
+   font-size:clamp(34px,5vw,68px);
+   line-height:.95;
+   margin-bottom:8px;
+   text-shadow:0 3px 0 #fff, 0 7px 18px rgba(107,72,137,.18);
+  }
+
+  .subtitle{
+   font-size:18px;
+   color:#7a5b8d;
+   max-width:820px;
+  }
+
+  .grid-top{
+   display:grid;
+   grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+   gap:22px;
+  }
+
+  .panel{
+   position:relative;
+   min-width:0;
+   overflow:hidden;
+   border-radius:26px;
+   padding:20px;
+   background:var(--card);
+   border:2px solid var(--stroke);
+   box-shadow:var(--shadow), inset 0 0 28px rgba(255,255,255,.52);
+   backdrop-filter:blur(16px);
+  }
+
+  .panel::before{
+   content:"";
+   position:absolute;
+   inset:0;
+   pointer-events:none;
+   background:
+    radial-gradient(circle at 100% 0%, rgba(255,255,255,.65), transparent 28%),
+    linear-gradient(135deg,rgba(255,255,255,.25),transparent 40%);
+  }
+
+  .panel > *{position:relative;z-index:1}
+
+
+  .panel,
+  .two-col > div,
+  .scroll-area,
+  .shop-item,
+  .shop-item *{
+   min-width:0;
+   max-width:100%;
+  }
+
+  h2{
+   font-size:24px;
+   margin-bottom:10px;
+  }
+
+  h3{
+   font-size:18px;
+   margin-bottom:4px;
+  }
+
+  .campaign-box,.boss-box{
+   border-radius:20px;
+   padding:14px 16px;
+   margin-bottom:14px;
+   border:2px solid rgba(110,73,141,.10);
+   background:rgba(255,255,255,.62);
+  }
+
+  .campaign-box{
+   box-shadow:inset 0 0 18px rgba(255,190,223,.22);
+  }
+
+  .boss-box{
+   box-shadow:inset 0 0 18px rgba(200,167,255,.26);
+  }
+
+  .progress-bar{
+   height:17px;
+   background:#f3eafb;
+   border:2px solid rgba(106,74,131,.16);
+   border-radius:999px;
+   overflow:hidden;
+   margin:8px 0;
+  }
+
+  .progress-fill{
+   height:100%;
+   width:0%;
+   background:linear-gradient(90deg,var(--pink),var(--yellow),var(--mint),var(--blue));
+   border-radius:999px;
+   transition:width .25s ease;
+   box-shadow:0 0 14px rgba(255,141,200,.55);
+  }
+
+  .boss-fill{
+   background:linear-gradient(90deg,#ff9b9b,#ffb6d8,#c8a7ff);
+  }
+
+  .stats{
+   display:grid;
+   grid-template-columns:repeat(3,minmax(0,1fr));
+   gap:12px;
+   margin-bottom:16px;
+  }
+
+  .stat{
+   border-radius:18px;
+   padding:12px;
+   background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,247,251,.72));
+   border:2px solid rgba(255,255,255,.9);
+   box-shadow:0 8px 22px rgba(96,55,128,.10);
+  }
+
+  .stat span{
+   display:block;
+   font-size:13px;
+   color:#8d6a9f;
+   margin-bottom:4px;
+  }
+
+  .stat strong{
+   display:block;
+   font-family:"Fredoka",sans-serif;
+   font-size:23px;
+   color:#6c4b88;
+  }
+
+  .main-button{
+   width:100%;
+   min-height:180px;
+   border:0;
+   border-radius:28px;
+   font-family:"Fredoka",sans-serif;
+   font-size:clamp(24px,3vw,38px);
+   font-weight:700;
+   color:white;
+   cursor:pointer;
+   background:
+    radial-gradient(circle at 50% 35%,rgba(255,255,255,.48),transparent 19%),
+    linear-gradient(135deg,#ff8fc8,#c49dff 48%,#83dfff);
+   box-shadow:
+    0 14px 0 rgba(108,75,136,.20),
+    0 22px 40px rgba(117,67,149,.25),
+    inset 0 0 28px rgba(255,255,255,.35);
+   transition:.15s ease;
+   text-shadow:0 2px 0 rgba(75,42,102,.18);
+   margin-bottom:14px;
+  }
+
+  .main-button:hover{transform:translateY(-2px) scale(1.01)}
+  .main-button:active{transform:translateY(4px) scale(.99);box-shadow:0 8px 0 rgba(108,75,136,.18)}
+
+  .log{
+   min-height:44px;
+   padding:12px 14px;
+   border-radius:16px;
+   background:rgba(255,255,255,.58);
+   color:#765589;
+   margin-bottom:12px;
+  }
+
+  .button-row{display:flex;gap:10px;flex-wrap:wrap}
+
+  button{
+   font-family:"Fredoka",sans-serif;
+   border:0;
+   cursor:pointer;
+  }
+
+  .secondary-btn,.buy-btn{
+   border-radius:14px;
+   padding:11px 14px;
+   color:#684983;
+   background:linear-gradient(135deg,#ffe0ef,#d8c7ff);
+   border:2px solid rgba(255,255,255,.86);
+   box-shadow:0 7px 18px rgba(87,62,112,.10);
+   transition:.2s;
+  }
+
+  button:hover{filter:brightness(1.03);transform:translateY(-1px)}
+  button:disabled{opacity:.42;cursor:not-allowed;transform:none;filter:none}
+
+  .two-col{
+   display:grid;
+   grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+   gap:20px;
+   align-items:start;
+  }
+
+  .section-note{
+   color:#8e6b9d;
+   font-size:14px;
+   margin-bottom:10px;
+   line-height:1.35;
+  }
+
+  .scroll-area{
+   max-height:760px;
+   overflow-y:auto;
+   overflow-x:hidden;
+   padding-right:8px;
+   display:flex;
+   flex-direction:column;
+   gap:14px;
+   scrollbar-color:#caa8ff transparent;
+  }
+
+  .shop-item,.event-card,.achievement-card,.talent-card,.quest-card{
+   border-radius:18px;
+   padding:14px;
+   background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,248,252,.82));
+   border:2px solid rgba(255,255,255,.9);
+   box-shadow:0 8px 24px rgba(90,52,120,.10);
+  }
+
+  .shop-item{
+   display:flex;
+   flex-direction:column;
+   justify-content:flex-start;
+   align-items:stretch;
+   gap:10px;
+   position:relative;
+   overflow:visible;
+   min-height:150px;
+   padding:16px;
+  }
+
+  .shop-item::after{
+   content:"";
+   position:absolute;
+   right:-25px;
+   top:-25px;
+   width:90px;
+   height:90px;
+   border-radius:50%;
+   background:radial-gradient(circle,rgba(255,195,225,.28),transparent 70%);
+  }
+
+  .shop-item > div{
+   display:flex;
+   flex-direction:column;
+   gap:6px;
+   min-width:0;
+   overflow:visible;
+  }
+
+  .shop-item h3{
+   font-size:16px;
+   line-height:1.2;
+   margin:0 0 4px 0;
+   white-space:normal;
+   word-break:break-word;
+   overflow-wrap:anywhere;
+  }
+
+  .shop-item p,
+  .shop-item small,
+  .event-card,
+  .achievement-card,
+  .talent-card,
+  .quest-card{
+   color:#7e5e91;
+   line-height:1.38;
+   white-space:normal;
+   word-break:break-word;
+   overflow-wrap:anywhere;
+  }
+
+  .shop-item p{
+   font-size:13px;
+   margin:0;
+  }
+
+  .shop-item small{
+   display:block;
+   font-size:12px;
+   margin-top:2px;
+  }
+
+  .buy-btn{
+   width:100%;
+   min-height:42px;
+   margin-top:auto;
+   font-size:12px;
+   font-weight:700;
+   line-height:1.25;
+   white-space:normal;
+   word-break:break-word;
+   overflow-wrap:anywhere;
+   background:linear-gradient(135deg,#ffd6e9,#d8c8ff 50%,#bdeeff);
+  }
+
+  .footer-stats{
+   margin-top:12px;
+   padding:12px;
+   border-radius:16px;
+   background:rgba(255,255,255,.54);
+   columns:2;
+   column-gap:18px;
+   line-height:1.7;
+   color:#805e92;
+  }
+
+  .bottom-grid{
+   display:grid;
+   grid-template-columns:repeat(3,minmax(0,1fr));
+   gap:22px;
+  }
+
+  .achievement-card.locked{opacity:.45;filter:saturate(.5)}
+
+  .talent-card button{
+   width:100%;
+   margin-top:10px;
+  }
+
+  .floating-text{
+   position:fixed;
+   z-index:9999;
+   pointer-events:none;
+   font-family:"Fredoka",sans-serif;
+   font-size:24px;
+   color:#fff;
+   text-shadow:0 2px 0 #a673b8,0 0 12px #ff9fd0;
+   animation:floatUp .85s ease-out forwards;
+  }
+
+  @keyframes floatUp{
+   to{opacity:0;transform:translateY(-55px) scale(1.18) rotate(-4deg)}
+  }
+
+  .emoji-orb{
+   display:inline-grid;
+   place-items:center;
+   width:34px;height:34px;
+   border-radius:50%;
+   margin-right:7px;
+   background:linear-gradient(135deg,#ffe4f1,#d8ccff);
+   box-shadow:inset 0 0 10px rgba(255,255,255,.8);
+  }
+
+  .tag{
+   display:inline-block;
+   padding:3px 8px;
+   border-radius:999px;
+   font-size:11px;
+   margin-top:5px;
+   background:#f4e8ff;
+   color:#77558e;
+  }
+
+  @media(max-width:1350px){
+   .two-col{grid-template-columns:1fr}
+  }
+
+  @media(max-width:1200px){
+   .grid-top,.bottom-grid{grid-template-columns:1fr}
+  }
+
+  @media(max-width:800px){
+   body{padding:12px}
+   .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+   .footer-stats{columns:1}
+  }
+
+  @media(max-width:520px){
+   .stats{grid-template-columns:1fr}
+   .hero{padding:22px}
+   .main-button{min-height:140px}
+  }
+ </style>
+</head>
+<body>
+<div class="wrapper">
+
+ <section class="hero">
+  <h1>Sush'Tes Potes</h1>
+  <div class="subtitle">Le jeux beaucoup trop mignon où tu rassembles tes potes, apprivoises des bestioles magiques, prends des augments absurdes et tabasses des boss ridiculement pipous.</div>
+ </section>
+
+ <div class="grid-top">
+  <div class="panel">
+   <div class="campaign-box">
+    <h3 id="campaignName">Quête actuelle</h3>
+    <div class="progress-bar"><div class="progress-fill" id="campaignFill"></div></div>
+    <div id="campaignText">0 / 100 câlins</div>
+   </div>
+
+   <div class="boss-box">
+    <h3 id="bossName">Boss actuel : aucun gros méchant pipou</h3>
+    <div class="progress-bar"><div class="progress-fill boss-fill" id="bossFill"></div></div>
+    <div id="bossText">La prairie est étrangement calme...</div>
+   </div>
+
+   <div class="stats">
+    <div class="stat"><span>Câlins magiques</span><strong id="credits">0</strong></div>
+    <div class="stat"><span>Câlins / sec</span><strong id="cps">0</strong></div>
+    <div class="stat"><span>Puissance de boop</span><strong id="clickPower">1</strong></div>
+    <div class="stat"><span>Niveau de pipouté</span><strong id="techLevel">1</strong></div>
+    <div class="stat"><span>Quêtes finies</span><strong id="victories">0</strong></div>
+    <div class="stat"><span>Étoiles d'augment</span><strong id="talentPoints">0</strong></div>
+    <div class="stat"><span>Total de câlins</span><strong id="totalCredits">0</strong></div>
+    <div class="stat"><span>Événements</span><strong id="eventsCount">0</strong></div>
+    <div class="stat"><span>Boss vaincus</span><strong id="bossesDefeated">0</strong></div>
+   </div>
+
+   <button class="main-button" id="mainClick">BOOPER LE MONDE</button>
+   <div class="log" id="log">Connexion au Royaume des Potes... chargement des licornes...</div>
+
+   <div class="footer-stats" id="unitsSummary"></div>
+
+   <div class="button-row" style="margin-top:12px;">
+    <button class="secondary-btn" onclick="saveGame()">Sauvegarder</button>
+    <button class="secondary-btn" onclick="resetGame()">Recommencer</button>
+   </div>
+  </div>
+
+  <div class="panel">
+   <div class="two-col">
+    <div>
+     <h2>Tes Potes</h2>
+     <div class="section-note">Chaque pote ou créature te rapporte des câlins par seconde. Plus t'en as, plus le prochain coûte cher.</div>
+     <div class="scroll-area" id="unitsShop"></div>
+    </div>
+
+    <div>
+     <h2>Augments</h2>
+     <div class="section-note">Des améliorations complètement abusées : sucre, magie, arcs-en-ciel, mini couronnes et pouvoir cosmique.</div>
+     <div class="scroll-area" id="upgradesShop"></div>
+    </div>
+   </div>
+  </div>
+ </div>
+
+ <div class="bottom-grid">
+  <div class="panel">
+   <h2>Objectifs Pipou</h2>
+   <div class="scroll-area" id="achievementsList"></div>
+  </div>
+
+  <div class="panel">
+   <h2>Journal des Quêtes</h2>
+   <div class="scroll-area" id="eventsList"></div>
+  </div>
+
+  <div class="panel">
+   <h2>Arbre d'Augments</h2>
+   <div class="section-note" id="talentUnlockText">Débloque les augments avancés après 3 quêtes.</div>
+   <div class="scroll-area" id="talentTree"></div>
+  </div>
+ </div>
+
+</div>
+
+<script>
+const unitDefs = [
+ { id:"came", name:"Camé — Gros Nounours", baseCost:12, growth:1.15, cps:1, desc:"+1 câlin/sec // gros nounours tanky, 93% douceur, 7% grognement." },
+ { id:"eno", name:"Eno — Mini Créa", baseCost:30, growth:1.16, cps:3, desc:"+3 câlins/sec // petite créature ultra mimi qui court partout." },
+ { id:"efti", name:"Efti — Petite Boule de Joie", baseCost:65, growth:1.17, cps:7, desc:"+7 câlins/sec // produit de la bonne humeur sans aucune autorisation." },
+ { id:"deejay", name:"Deejay — Warp-Dieu Mignon", baseCost:130, growth:1.18, cps:15, desc:"+15 câlins/sec // une entité cosmique capable de plier l'espace pour récupérer un cookie." },
+ { id:"ety", name:"SixouBou — Princesse Pipou", baseCost:240, growth:1.19, cps:28, desc:"+28 câlins/sec // règne sur un royaume composé à 63% de coussins." },
+ { id:"lapin", name:"Lapin Nuage", baseCost:420, growth:1.20, cps:48, desc:"+48 câlins/sec // bondit entre deux dimensions uniquement pour demander des gratouilles." },
+ { id:"licorne", name:"Licorne Bonbon", baseCost:800, growth:1.21, cps:90, desc:"+90 câlins/sec // transforme les problèmes en paillettes." },
+ { id:"pegase", name:"Pégase Marshmallow", baseCost:1500, growth:1.22, cps:165, desc:"+165 câlins/sec // probablement trop gros pour entrer dans le salon." },
+ { id:"axolotl", name:"Axolotl Cosmique", baseCost:2800, growth:1.23, cps:300, desc:"+300 câlins/sec // fixe le vide. Le vide lui fait coucou." },
+ { id:"dragon", name:"Mini Dragon Mochi", baseCost:5400, growth:1.24, cps:560, desc:"+560 câlins/sec // souffle des confettis au lieu du feu. Beaucoup plus pratique." },
+ { id:"blob", name:"Blob Fraise", baseCost:10000, growth:1.26, cps:1000, desc:"+1000 câlins/sec // rebondit. Mange. Rebondit encore." },
+ { id:"celeste", name:"Gardienne Céleste Pipou", baseCost:22000, growth:1.30, cps:2200, desc:"+2200 câlins/sec // ange cosmique officiellement chargé de protéger les goûters de Sushi." }
+];
+
+const upgradeDefs = [
+ { id:"sucre", name:"Dose de Sucre", baseCost:80, growth:1.5, effect:"globalMult", value:.10, desc:"+10% de production globale." },
+ { id:"couronne", name:"Mini Couronne en Plastique", baseCost:180, growth:1.55, effect:"tech", value:1, desc:"+1 niveau de pipouté." },
+ { id:"cookie", name:"Cookie de l'Amitié", baseCost:360, growth:1.6, effect:"globalMult", value:.16, desc:"+16% production globale." },
+ { id:"boop", name:"Doigt de Boop Légendaire", baseCost:650, growth:1.65, effect:"click", value:2, desc:"+2 puissance de boop." },
+ { id:"rainbow", name:"Arc-en-ciel Portable", baseCost:1100, growth:1.70, effect:"globalFlat", value:90, desc:"+90 câlins/sec plats." },
+ { id:"coussin", name:"Forteresse de Coussins", baseCost:1800, growth:1.75, effect:"eventResist", value:.15, desc:"Réduit les pertes des événements négatifs." },
+ { id:"etoiles", name:"Pluie d'Étoiles", baseCost:2900, growth:1.80, effect:"eventLuck", value:.12, desc:"Plus de chances d'événements positifs." },
+ { id:"tea", name:"Thé Royal Pipou", baseCost:4800, growth:1.85, effect:"globalMult", value:.24, desc:"+24% production globale." },
+ { id:"hugstorm", name:"Tempête de Câlins", baseCost:8000, growth:1.95, effect:"memberMult", value:.32, desc:"+32% production des potes." },
+ { id:"cloud", name:"Nuage Premium", baseCost:12500, growth:2, effect:"globalFlat", value:420, desc:"+420 câlins/sec plats." },
+ { id:"bonk", name:"Bonk de Princesse", baseCost:23000, growth:2.15, effect:"bossDmg", value:.30, desc:"+30% dégâts sur les boss." },
+ { id:"godmode", name:"Pipou God Mode", baseCost:42000, growth:2.25, effect:"globalMult", value:.55, desc:"+55% production globale." }
+];
+
+const campaignSteps = [
+ {target:800,name:"Retrouver les 3 premiers potes",reward:1},
+ {target:3500,name:"Construire le premier nid à doudous",reward:1},
+ {target:12000,name:"Sauver un lapin tombé d'un nuage",reward:2},
+ {target:42000,name:"Organiser la fête des licornes",reward:2},
+ {target:130000,name:"Traverser la Forêt des Mochis",reward:3},
+ {target:420000,name:"Réparer le Palais Pipou",reward:3},
+ {target:1300000,name:"Ouvrir la Porte Arc-en-ciel",reward:4},
+ {target:4000000,name:"Faire sourire la Lune",reward:4},
+ {target:11000000,name:"Unifier les Royaumes des Potes",reward:5},
+ {target:28000000,name:"Ascension Suprême de la Pipouté",reward:6}
+];
+
+const bossDefs = [
+ {id:"goose",name:"L'Oie Pas Gentille",threshold:3500,hp:4200,reward:900},
+ {id:"sock",name:"Le Monstre Sous le Lit",threshold:42000,hp:38000,reward:9000},
+ {id:"cat",name:"Le Chat qui Pousse Tout par Terre",threshold:420000,hp:310000,reward:85000},
+ {id:"cloud",name:"Le Nuage Grognon",threshold:4000000,hp:2300000,reward:750000},
+ {id:"void",name:"Le Gros Blob du Néant",threshold:22000000,hp:11000000,reward:3500000}
+];
+
+const achievementDefs = [
+ {id:"first",name:"Premier Boop",desc:"Générer ton premier câlin magique.",check:g=>g.totalCredits>=1},
+ {id:"ten",name:"Petite Bande",desc:"Posséder 10 potes/créatures.",check:g=>getTotalUnits(g)>=10},
+ {id:"fifty",name:"Zoo Pipou",desc:"Posséder 50 unités.",check:g=>getTotalUnits(g)>=50},
+ {id:"came20",name:"Mur de Nounours",desc:"Avoir 20 Camé.",check:g=>g.units.came>=20},
+ {id:"deejay5",name:"Culte du Warp Mignon",desc:"Avoir 5 Deejay.",check:g=>g.units.deejay>=5},
+ {id:"ety10",name:"Cour Royale",desc:"Avoir 10 Ety Six.",check:g=>g.units.ety>=10},
+ {id:"cps1k",name:"Machine à Câlins",desc:"Atteindre 1 000 câlins/sec.",check:g=>getCps(g)>=1000},
+ {id:"cps10k",name:"Réacteur à Pipouté",desc:"Atteindre 10 000 câlins/sec.",check:g=>getCps(g)>=10000},
+ {id:"boss1",name:"Premier Bonk",desc:"Vaincre un boss.",check:g=>g.bossesDefeated>=1},
+ {id:"vict5",name:"Aventurier Pipou",desc:"Finir 5 quêtes.",check:g=>g.victories>=5},
+ {id:"tech10",name:"Trop Mignon pour Être Légal",desc:"Atteindre niveau de pipouté 10.",check:g=>g.techLevel>=10},
+ {id:"god",name:"Pipou Suprême",desc:"Avoir 5 Gardiens Célestes.",check:g=>g.units.celeste>=5}
+];
+
+const talentDefs = [
+ {id:"soft",name:"Aura Toute Douce",tier:1,unlockVictory:3,cost:1,desc:"+10% global",effect:{globalMult:.10}},
+ {id:"friends",name:"Pouvoir de l'Amitié",tier:2,unlockVictory:4,cost:1,desc:"+20% potes",effect:{memberMult:.20}},
+ {id:"sparkle",name:"Paillettes Critiques",tier:2,unlockVictory:4,cost:1,desc:"+15% global",effect:{globalMult:.15}},
+ {id:"shield",name:"Bouclier Nuage",tier:2,unlockVictory:4,cost:1,desc:"-15% pertes événements",effect:{eventResist:.15}},
+ {id:"luck",name:"Trèfle Arc-en-ciel",tier:2,unlockVictory:4,cost:1,desc:"+15% chance événements positifs",effect:{eventLuck:.15}},
+ {id:"warp",name:"Warp Pipou",tier:3,unlockVictory:5,cost:2,desc:"+35% global",effect:{globalMult:.35}},
+ {id:"royal",name:"Bénédiction Royale",tier:3,unlockVictory:5,cost:2,desc:"+35% potes",effect:{memberMult:.35}},
+ {id:"bonk",name:"Bonk Astral",tier:3,unlockVictory:5,cost:2,desc:"+30% dégâts boss",effect:{bossDmg:.30}},
+ {id:"moon",name:"Lune en Peluche",tier:3,unlockVictory:5,cost:2,desc:"+25% global",effect:{globalMult:.25}}
+];
+
+function makeDefaultState(){
+ const units={},unitCosts={},upgradeLevels={},upgradeCosts={},talents={};
+ unitDefs.forEach(u=>{units[u.id]=0;unitCosts[u.id]=u.baseCost});
+ upgradeDefs.forEach(u=>{upgradeLevels[u.id]=0;upgradeCosts[u.id]=u.baseCost});
+ talentDefs.forEach(t=>talents[t.id]=0);
+ return{
+  credits:0,totalCredits:0,clickPower:1,techLevel:1,victories:0,currentCampaign:0,
+  bossesDefeated:0,randomEventsTriggered:0,units,unitCosts,upgradeLevels,upgradeCosts,
+  achievements:[],events:[],talentPoints:0,talents,activeBoss:null,
+  upgradeEffects:{globalMult:0,memberMult:0,globalFlat:0,bossDmg:0,eventLuck:0,eventResist:0}
+ };
+}
+
+let game=makeDefaultState();
+
+const formatNumber=n=>Math.floor(n).toLocaleString("fr-FR");
+const setLog=t=>document.getElementById("log").textContent=t;
+const getTotalUnits=(g=game)=>Object.values(g.units).reduce((a,b)=>a+b,0);
+
+function getTalentBonus(g,key){
+ let total=0;
+ talentDefs.forEach(t=>{if(g.talents[t.id]>0&&t.effect[key])total+=t.effect[key]});
+ return total;
+}
+function getUpgradeBonus(g,key){return g.upgradeEffects[key]||0}
+function getUnitCps(id,g=game){
+ const d=unitDefs.find(u=>u.id===id); if(!d)return 0;
+ return d.cps*(1+getUpgradeBonus(g,"memberMult")+getTalentBonus(g,"memberMult"));
+}
+function getBaseCps(g=game){
+ return unitDefs.reduce((t,u)=>t+g.units[u.id]*getUnitCps(u.id,g),0);
+}
+function getCps(g=game){
+ const mult=1+getUpgradeBonus(g,"globalMult")+getTalentBonus(g,"globalMult");
+ return Math.floor((getBaseCps(g)+getUpgradeBonus(g,"globalFlat"))*g.techLevel*mult);
+}
+function getBossDamagePerSecond(g=game){
+ return Math.max(1,Math.floor(getCps(g)*(.04+getUpgradeBonus(g,"bossDmg")+getTalentBonus(g,"bossDmg"))));
+}
+function createFloatingText(x,y,v){
+ const el=document.createElement("div");
+ el.className="floating-text";
+ el.textContent="+"+formatNumber(v)+"";
+ el.style.left=x+"px"; el.style.top=y+"px";
+ document.body.appendChild(el);
+ setTimeout(()=>el.remove(),850);
+}
+function addCredits(v){game.credits+=v;game.totalCredits+=v}
+function addEvent(t){
+ const tm=new Date().toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+ game.events.unshift("["+tm+"] "+t);
+ if(game.events.length>45)game.events.pop();
+ renderEvents();
+}
+function unlockAchievement(id){
+ if(game.achievements.includes(id))return;
+ game.achievements.push(id);
+ const d=achievementDefs.find(a=>a.id===id);
+ if(d)addEvent("Objectif débloqué : "+d.name);
+}
+function checkAchievements(){
+ achievementDefs.forEach(a=>{if(!game.achievements.includes(a.id)&&a.check(game))unlockAchievement(a.id)});
+}
+function renderEvents(){
+ const list=document.getElementById("eventsList"); list.innerHTML="";
+ if(!game.events.length){list.innerHTML='<div class="event-card">Tout est calme. Beaucoup trop calme. </div>';return;}
+ game.events.forEach(e=>{const d=document.createElement("div");d.className="event-card";d.textContent=e;list.appendChild(d)});
+}
+function renderAchievements(){
+ const list=document.getElementById("achievementsList");list.innerHTML="";
+ achievementDefs.forEach(a=>{
+  const d=document.createElement("div");
+  d.className="achievement-card"+(game.achievements.includes(a.id)?"":" locked");
+  d.innerHTML=`<strong>${a.name}</strong><p>${a.desc}</p>`;
+  list.appendChild(d);
+ });
+}
+function renderUnitsShop(){
+ const c=document.getElementById("unitsShop");c.innerHTML="";
+ unitDefs.forEach(u=>{
+  const d=document.createElement("div"); d.className="shop-item";
+  d.innerHTML=`<div><h3>${u.name}</h3><p>${u.desc}</p><small>Déployé : <span id="owned_${u.id}">0</span></small></div><button class="buy-btn" id="btn_unit_${u.id}">Adopter (${formatNumber(game.unitCosts[u.id])})</button>`;
+  c.appendChild(d); d.querySelector("button").onclick=()=>buyUnit(u.id);
+ });
+}
+function renderUpgradesShop(){
+ const c=document.getElementById("upgradesShop");c.innerHTML="";
+ upgradeDefs.forEach(u=>{
+  const d=document.createElement("div"); d.className="shop-item";
+  d.innerHTML=`<div><h3>${u.name}</h3><p>${u.desc}</p><small>Niveau : <span id="lvl_${u.id}">0</span></small></div><button class="buy-btn" id="btn_upg_${u.id}">Prendre (${formatNumber(game.upgradeCosts[u.id])})</button>`;
+  c.appendChild(d); d.querySelector("button").onclick=()=>buyUpgrade(u.id);
+ });
+}
+function renderTalentTree(){
+ const c=document.getElementById("talentTree");c.innerHTML="";
+ document.getElementById("talentUnlockText").textContent=game.victories>=3?"Les augments avancés sont actifs. Fais n'importe quoi avec beaucoup trop de puissance.":"Débloque les augments avancés après 3 quêtes.";
+ talentDefs.forEach(t=>{
+  const can=game.victories>=t.unlockVictory,owned=game.talents[t.id]>0;
+  const d=document.createElement("div");d.className="talent-card";
+  d.innerHTML=`<strong>${t.name}</strong><p>${t.desc}</p><small>Tier ${t.tier} • Quête ${t.unlockVictory} • Coût ${t.cost} étoile</small><button class="buy-btn" ${(!can||owned||game.talentPoints<t.cost)?"disabled":""}>${owned?"Débloqué":"Débloquer"}</button>`;
+  d.querySelector("button").onclick=()=>buyTalent(t.id); c.appendChild(d);
+ });
+}
+function renderUnitsSummary(){
+ const e=document.getElementById("unitsSummary");let h="";
+ unitDefs.forEach(u=>h+=`${u.name} : <span id="sum_${u.id}">${game.units[u.id]}</span><br>`);
+ e.innerHTML=h;
+}
+function updateCampaignUI(){
+ const i=Math.min(game.currentCampaign,campaignSteps.length-1),s=campaignSteps[i];
+ const prev=i===0?0:campaignSteps[i-1].target;
+ const cur=Math.max(0,game.totalCredits-prev),need=s.target-prev,pct=Math.max(0,Math.min(100,cur/need*100));
+ document.getElementById("campaignName").textContent="Quête actuelle : "+s.name;
+ document.getElementById("campaignFill").style.width=pct+"%";
+ document.getElementById("campaignText").textContent=`${formatNumber(cur)} / ${formatNumber(need)} câlins`;
+}
+function updateBossUI(){
+ const n=document.getElementById("bossName"),f=document.getElementById("bossFill"),t=document.getElementById("bossText");
+ if(!game.activeBoss){n.textContent="Boss actuel : aucun gros méchant pipou";f.style.width="0%";t.textContent="La prairie est étrangement calme...";return;}
+ const pct=Math.max(0,Math.min(100,game.activeBoss.hp/game.activeBoss.maxHp*100));
+ n.textContent="Boss actuel : "+game.activeBoss.name;f.style.width=pct+"%";
+ t.textContent=`${formatNumber(game.activeBoss.hp)} / ${formatNumber(game.activeBoss.maxHp)} PV`;
+}
+function updateButtons(){
+ unitDefs.forEach(u=>{const b=document.getElementById("btn_unit_"+u.id);if(b){b.disabled=game.credits<game.unitCosts[u.id];b.textContent=`Adopter (${formatNumber(game.unitCosts[u.id])})`;}})
+ upgradeDefs.forEach(u=>{const b=document.getElementById("btn_upg_"+u.id);if(b){b.disabled=game.credits<game.upgradeCosts[u.id];b.textContent=`Prendre (${formatNumber(game.upgradeCosts[u.id])})`;}})
+}
+function updateSummaryNumbers(){
+ credits.textContent=formatNumber(game.credits);cps.textContent=formatNumber(getCps());clickPower.textContent=formatNumber(game.clickPower);
+ techLevel.textContent=formatNumber(game.techLevel);victories.textContent=formatNumber(game.victories);talentPoints.textContent=formatNumber(game.talentPoints);
+ totalCredits.textContent=formatNumber(game.totalCredits);eventsCount.textContent=formatNumber(game.randomEventsTriggered);bossesDefeated.textContent=formatNumber(game.bossesDefeated);
+ unitDefs.forEach(u=>{const a=document.getElementById("owned_"+u.id),b=document.getElementById("sum_"+u.id);if(a)a.textContent=game.units[u.id];if(b)b.textContent=game.units[u.id]});
+ upgradeDefs.forEach(u=>{const l=document.getElementById("lvl_"+u.id);if(l)l.textContent=game.upgradeLevels[u.id]});
+}
+function updateUI(){
+ updateSummaryNumbers();updateButtons();updateCampaignUI();updateBossUI();renderAchievements();renderEvents();renderTalentTree();checkAchievements();checkCampaignProgress();checkBossSpawn();
+}
+function buyUnit(id){
+ const d=unitDefs.find(u=>u.id===id),cost=game.unitCosts[id];if(!d)return;
+ if(game.credits<cost){setLog("Pas assez de câlins magiques. Le lapin te juge gentiment.");return;}
+ game.credits-=cost;game.units[id]++;game.unitCosts[id]=Math.floor(cost*d.growth);
+ setLog(d.name+" rejoint la team ! ");addEvent(d.name+" a été adopté.");updateUI();saveGame(false);
+}
+function applyUpgradeEffect(d){
+ if(d.effect==="click")game.clickPower+=d.value;
+ if(d.effect==="tech")game.techLevel+=d.value;
+ if(["globalMult","memberMult","globalFlat","bossDmg","eventLuck","eventResist"].includes(d.effect))game.upgradeEffects[d.effect]+=d.value;
+}
+function buyUpgrade(id){
+ const d=upgradeDefs.find(u=>u.id===id),cost=game.upgradeCosts[id];if(!d)return;
+ if(game.credits<cost){setLog("Pas assez de câlins. Même le blob fraise dit non.");return;}
+ game.credits-=cost;game.upgradeLevels[id]++;applyUpgradeEffect(d);game.upgradeCosts[id]=Math.floor(cost*d.growth);
+ setLog("Augment obtenu : "+d.name);addEvent("Augment : "+d.name);updateUI();saveGame(false);
+}
+function buyTalent(id){
+ const d=talentDefs.find(t=>t.id===id);if(!d||game.victories<d.unlockVictory||game.talents[id]>0||game.talentPoints<d.cost)return;
+ game.talentPoints-=d.cost;game.talents[id]=1;setLog("Nouvel augment avancé : "+d.name);addEvent(" étoile Talent débloqué : "+d.name);updateUI();saveGame(false);
+}
+function checkCampaignProgress(){
+ while(game.currentCampaign<campaignSteps.length&&game.totalCredits>=campaignSteps[game.currentCampaign].target){
+  const s=campaignSteps[game.currentCampaign];
+  game.currentCampaign++;game.victories++;game.talentPoints+=s.reward;
+  setLog("Quête accomplie : "+s.name+" !");addEvent(`Quête terminée : ${s.name} // +${s.reward} étoile(s)`);
+ }
+}
+function checkBossSpawn(){
+ if(game.activeBoss)return;
+ for(let i=0;i<bossDefs.length;i++){
+  const b=bossDefs[i];
+  if(game.totalCredits>=b.threshold&&game.bossesDefeated<=i){
+   game.activeBoss={id:b.id,name:b.name,hp:b.hp,maxHp:b.hp,reward:b.reward};
+   addEvent("BOSS : "+b.name+" débarque !");setLog("Le royaume tremble très légèrement.");break;
+  }
+ }
+}
+function tickBoss(){
+ if(!game.activeBoss)return;
+ game.activeBoss.hp-=getBossDamagePerSecond()/10;
+ if(game.activeBoss.hp<=0){
+  const r=game.activeBoss.reward,n=game.activeBoss.name;
+  addCredits(r);game.bossesDefeated++;game.activeBoss=null;
+  addEvent(`${n} vaincu // +${formatNumber(r)} câlins`);setLog("Boss bonké avec succès ");
+ }
+}
+function randomEventTick(){
+ const chance=.08+getUpgradeBonus(game,"eventLuck")+getTalentBonus(game,"eventLuck");
+ if(Math.random()>chance)return;
+ game.randomEventsTriggered++;
+ const ev=[
+  ()=>{const g=Math.max(60,Math.floor(getCps()*8));addCredits(g);addEvent(`Une licorne éternue des paillettes // +${formatNumber(g)}`);},
+  ()=>{game.clickPower++;addEvent("Boop critique ! +1 puissance de boop.");},
+  ()=>{game.talentPoints++;addEvent("Une étoile tombe dans ta poche // +1 augment.");},
+  ()=>{const g=Math.max(120,Math.floor(getCps()*14));addCredits(g);addEvent(`Camé distribue des câlins XXL // +${formatNumber(g)}`);},
+  ()=>{game.techLevel++;addEvent("Ety Six te donne une bénédiction royale // +1 pipouté.");},
+  ()=>{const r=getUpgradeBonus(game,"eventResist")+getTalentBonus(game,"eventResist"),loss=Math.floor(game.credits*Math.max(.03,.13-r));game.credits=Math.max(0,game.credits-loss);addEvent(`Une oie vole ton goûter // -${formatNumber(loss)}`);},
+  ()=>{const c=unitDefs.filter(u=>game.units[u.id]>0);if(!c.length)return;const p=c[Math.floor(Math.random()*c.length)];game.units[p.id]--;addEvent(`${p.name} s'endort dans un coussin // -1 unité temporairement.`);},
+  ()=>{const l=Math.floor(Math.max(20,getCps()*3));game.credits=Math.max(0,game.credits-l);addEvent(`Mini pluie triste // -${formatNumber(l)} câlins.`);}
+ ];
+ ev[Math.floor(Math.random()*ev.length)]();updateUI();
+}
+function passiveIncomeTick(){addCredits(getCps()/10)}
+
+document.getElementById("mainClick").addEventListener("click",e=>{
+ const gain=game.clickPower*game.techLevel;addCredits(gain);createFloatingText(e.clientX,e.clientY,gain);
+ const logs=["Boop validé. Très professionnel.","Un lapin applaudit.","Deejay plie l'espace pour récupérer un bonbon.","Efti fait un petit bruit de victoire.","Camé fait un câlin de zone.","Ety Six dit : « c'est beaucoup trop pipou. »"];
+ setLog(logs[Math.floor(Math.random()*logs.length)]);updateUI();
+});
+
+function saveGame(show=true){
+ localStorage.setItem("sushtesPotesClickerV1",JSON.stringify(game));
+ if(show)setLog("Sauvegarde faite. Les potes sont bien rangés dans le nuage.");
+}
+function loadGame(){
+ const s=localStorage.getItem("sushtesPotesClickerV1");
+ if(!s){addEvent("Nouvelle aventure Sush'tes Potes lancée.");return;}
+ try{
+  const p=JSON.parse(s),f=makeDefaultState();
+  game={...f,...p,units:{...f.units,...(p.units||{})},unitCosts:{...f.unitCosts,...(p.unitCosts||{})},upgradeLevels:{...f.upgradeLevels,...(p.upgradeLevels||{})},upgradeCosts:{...f.upgradeCosts,...(p.upgradeCosts||{})},achievements:p.achievements||[],events:p.events||[],talents:{...f.talents,...(p.talents||{})},upgradeEffects:{...f.upgradeEffects,...(p.upgradeEffects||{})}};
+  setLog("Sauvegarde chargée ");
+ }catch(e){game=makeDefaultState();addEvent("La sauvegarde a été mangée par un blob. Oups.");}
+}
+function resetGame(){
+ if(!confirm("Tu veux vraiment recommencer toute l'aventure Sush'tes Potes ?"))return;
+ localStorage.removeItem("sushtesPotesClickerV1");game=makeDefaultState();renderUnitsShop();renderUpgradesShop();renderUnitsSummary();addEvent("Nouvelle aventure relancée.");setLog("Tout repart à zéro. Les lapins aussi.");updateUI();
+}
+
+renderUnitsShop();renderUpgradesShop();renderUnitsSummary();loadGame();updateUI();
+setInterval(()=>{passiveIncomeTick();tickBoss();updateUI();},100);
+setInterval(randomEventTick,12000);
+setInterval(()=>saveGame(false),5000);
+</script>
+</body>
+</html>
